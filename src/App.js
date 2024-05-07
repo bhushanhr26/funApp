@@ -80,12 +80,15 @@ export default function App() {
       return (timer.months = "December");
     }
   };
+  function hours12(date) {
+    return (timer.hours = (date + 24) % 12 || 12);
+  }
   const getUkCurrentTime = () => {
     const bstTime = moment().tz("Europe/London"); // Get current time in BST timezone
     setUkTimer({
       ...uKTimer,
       days: bstTime.format("dddd"),
-      hours: bstTime.format("HH"),
+      hours: bstTime.format("LT"),
       minutes: bstTime.format("mm"),
       months: bstTime.format("MMM"),
       years: bstTime.format("YYYY"),
@@ -93,17 +96,17 @@ export default function App() {
     });
   };
   const getCurrentTime = () => {
-    let date = new Date();
-    getUkCurrentTime();
+    const istTime = moment().tz("Asia/Calcutta|Asia/Kolkata");; // Get current time in BST timezone
     setTimer({
       ...timer,
-      days: getDays(date.getDay()),
-      months: getMonths(date.getMonth()),
-      years: date.getFullYear(),
-      hours: date.getHours(),
-      minutes: date.getMinutes(),
-      seconds: date.getSeconds(),
+      days: istTime.format("dddd"),
+      hours: istTime.format("LT"),
+      minutes: istTime.format("mm"),
+      months: istTime.format("MMM"),
+      years: istTime.format("YYYY"),
+      seconds: istTime.format("s"),
     });
+    getUkCurrentTime();
   };
 
   setInterval(getCurrentTime, 1000);
